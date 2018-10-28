@@ -1,0 +1,7 @@
+name: LorinthsRpWarps
+description: Adds configurable and discoverable warps for your players to create and use
+version: 1.0.0
+main: me.lorinth.rpwarps.LorinthsRpWarps
+commands:
+  rpw:
+    aliases: [rpwarp]
