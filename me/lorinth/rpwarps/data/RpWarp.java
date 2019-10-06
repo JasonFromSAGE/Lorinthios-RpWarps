@@ -28,7 +28,7 @@ public class RpWarp {
     private String ownerUUID;
     private Location location;
     private List<String> blockedPlayerUUIDs = new ArrayList<>();
-    private Material icon = Material.EYE_OF_ENDER;
+    private Material icon = Material.ENDER_EYE;
 
     private boolean isServerWarp = false; //Displayed Seperately
     private boolean isAccessWarp = false; //Unlearnable
@@ -58,7 +58,7 @@ public class RpWarp {
         if(TryParse.parseMaterial(iconMaterial))
             icon = Material.valueOf(iconMaterial);
         else
-            icon = Material.EYE_OF_ENDER;
+            icon = Material.ENDER_EYE;
 
         blockedPlayerUUIDs = config.getStringList(path + "BlockedPlayers");
         isServerWarp = config.getBoolean(path + "IsServerWarp");
@@ -143,7 +143,7 @@ public class RpWarp {
             if(item.getType() != Material.AIR)
                 icon = item.getType();
             else {
-                icon = Material.EYE_OF_ENDER;
+                icon = Material.ENDER_EYE;
                 durability = item.getDurability();
             }
         }

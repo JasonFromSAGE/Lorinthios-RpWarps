@@ -23,10 +23,10 @@ public class RpWarpBlockListener implements Listener {
         if (event.getBlock().getType() == Material.SEA_LANTERN) {
             Location loc = event.getBlock().getLocation();
 
-            boolean one = loc.clone().add(1, 0, 0).getBlock().getType() == Material.DOUBLE_STEP;
-            boolean two = loc.clone().add(-1, 0, 0).getBlock().getType() == Material.DOUBLE_STEP;
-            boolean three = loc.clone().add(0, 0, 1).getBlock().getType() == Material.DOUBLE_STEP;
-            boolean four = loc.clone().add(0, 0, -1).getBlock().getType() == Material.DOUBLE_STEP;
+            boolean one = loc.clone().add(1, 0, 0).getBlock().getType() == Material.STONE_BRICKS;
+            boolean two = loc.clone().add(-1, 0, 0).getBlock().getType() == Material.STONE_BRICKS;
+            boolean three = loc.clone().add(0, 0, 1).getBlock().getType() == Material.STONE_BRICKS;
+            boolean four = loc.clone().add(0, 0, -1).getBlock().getType() == Material.STONE_BRICKS;
 
             if (one && two && three && four)
                 RpWarpManager.createWarp(player, event.getBlock());

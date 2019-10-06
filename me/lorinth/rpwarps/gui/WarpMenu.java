@@ -3,13 +3,11 @@ package me.lorinth.rpwarps.gui;
 import me.lorinth.rpwarps.data.PlayerWarpProfile;
 import me.lorinth.rpwarps.data.RpWarp;
 import me.lorinth.rpwarps.manager.RpWarpManager;
-import me.lorinth.rpwarps.util.OutputHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class WarpMenu{
@@ -22,15 +20,17 @@ public class WarpMenu{
     private int serverRows = -1;
     private int totalRows = 0;
 
-    private final ItemStack divider = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 2);
-    private final ItemStack up = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 1);
-    private final ItemStack down = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 3);
+    private final ItemStack divider = new ItemStack(Material.MAGENTA_STAINED_GLASS_PANE, 1);
+    private final ItemStack up = new ItemStack(Material.LEGACY_STAINED_GLASS_PANE, 1, (byte) 1);
+    private final ItemStack down = new ItemStack(Material.LEGACY_STAINED_GLASS_PANE, 1, (byte) 3);
 
     public WarpMenu(Player player){
         profile = RpWarpManager.getProfileByPlayer(player);
 
         int count = 0;
         for(RpWarp warp : profile.getDiscoveredWarps()){
+            if(warp == null)
+                continue;
             if(!warp.isServerWarp() && !warp.isAccessWarp()){
                 warps.put(count, warp);
                 count++;
@@ -38,6 +38,9 @@ public class WarpMenu{
         }
         count = 0;
         for(RpWarp warp : RpWarpManager.getServerWarpList()){
+            if(warp == null)
+                continue;
+
             serverWarps.put(count, warp);
             count++;
         }
@@ -47,14 +50,14 @@ public class WarpMenu{
         menu = new IconMenu(ChatColor.DARK_PURPLE + "Warp Menu", 5, this::click);
 
         //OutputHandler.PrintInfo(player, "Server Rows : " + serverRows);
-        OutputHandler.PrintInfo(player, "Total Rows : " + totalRows);
+        //OutputHandler.PrintInfo(player, "Total Rows : " + totalRows);
 
         makePage(player);
     }
 
     public boolean click(Player clicker, IconMenu menu, IconMenu.Row row, int slot, ItemStack item){
         if(item != null){
-            if(item.getType() == Material.STAINED_GLASS_PANE) {
+            if(item.getType() == Material.LEGACY_STAINED_GLASS_PANE) {
                 if (row.row == 0){
                     page -= 1;
                     makePage(clicker);
@@ -95,7 +98,7 @@ public class WarpMenu{
             startRow++;
         }
 
-        OutputHandler.PrintInfo(player, "StartRow : " + startRow);
+        //OutputHandler.PrintInfo(player, "StartRow : " + startRow);
 
         //If there is a next page, add a bottom bar
         if(totalRows > page * 3 + 4){
@@ -107,7 +110,7 @@ public class WarpMenu{
         for(int currentRow = startRow; currentRow<endRow; currentRow++) {
             //OutputHandler.PrintInfo(player, "NextRow : " + i);
             if(getCurrentRow(currentRow) < serverRows){
-                OutputHandler.PrintInfo(player, "Is Server Row");
+                //OutputHandler.PrintInfo(player, "Is Server Row");
                 for(int slot=0; slot<9; slot++){
                     int currentSlot = getServerWarpSlot(currentRow, slot);
                     if(serverWarps.containsKey(currentSlot)){
@@ -119,12 +122,12 @@ public class WarpMenu{
                 }
             }
             else if(getCurrentRow(currentRow) == serverRows){
-                OutputHandler.PrintInfo(player, "Make Divider");
+                //OutputHandler.PrintInfo(player, "Make Divider");
                 for(int slot=0; slot<9; slot++)
                     menu.addButton(menu.getRow(currentRow), slot, divider.clone(), "");
             }
             else{
-                OutputHandler.PrintInfo(player, "Make Normal Warp Row");
+                //OutputHandler.PrintInfo(player, "Make Normal Warp Row");
                 for(int slot=0; slot<9; slot++){
                     int currentSlot = getPlayerWarpSlot(currentRow, slot);
                     //OutputHandler.PrintInfo(player, "Current Slot : " + currentSlot);
